@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAMASTE – ICD-11 Integrated EHR Platform | Ministry of Ayush</title>
+
+    <!-- Google Fonts & FontAwesome 6 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Clinical CSS -->
+    <link rel="stylesheet" href="csih.css">
+</head>
+
+<body>
+
+    <div id="app-root">
+        <!-- 1. OFFICIAL HEALTHCARE TOP HEADER -->
+        <header class="official-header">
+            <div class="brand-section">
+                <div class="emblem-box">
+                    <i class="fa-solid fa-staff-snake"></i>
+                </div>
+                <div class="brand-titles">
+                    <h1>
+                        <span>NAMASTE – ICD-11 EHR Platform</span>
+                        <span
+                            style="font-size: 0.68rem; background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 4px; font-weight: 600;">ABDM
+                            Standard</span>
+                    </h1>
+                    <div class="brand-subtitle">Ministry of Ayush • WHO ICD-11 Dual-Coding Standardized Clinical Portal
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <!-- Role Switcher -->
+                <div class="role-switcher-box">
+                    <i class="fa-solid fa-user-gear" style="font-size: 0.85rem;"></i>
+                    <span style="font-size: 0.76rem; opacity: 0.9;">Role:</span>
+                    <select id="role-select">
+                        <option value="doctor">👨‍⚕️ Doctor (Clinical)</option>
+                        <option value="staff">🧑‍⚕️ Clinical Staff</option>
+                        <option value="admin">🏥 Hospital Admin</option>
+                        <option value="developer">👨‍💻 Developer / API</option>
+                    </select>
+                </div>
+
+                <!-- Notifications -->
+                <button class="btn btn-secondary btn-sm" id="btn-notifications"
+                    style="background: rgba(255,255,255,0.15); border: none; color: white;">
+                    <i class="fa-solid fa-bell"></i>
+                    <span
+                        style="background: #EF4444; font-size: 0.7rem; padding: 1px 6px; border-radius: 10px; margin-left: 2px;">7</span>
+                </button>
+
+                <!-- Quick Action Shortcuts Strip for Ultra-Fast Workflow -->
+                <div
+                    style="background: rgba(0, 0, 0, 0.2); padding: 4px 12px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 8px; font-size: 0.76rem;">
+                    <span style="font-weight: 700; color: #7DD3FC;"><i class="fa-solid fa-bolt"></i> Fast
+                        Shortcuts:</span>
+                    <button class="btn btn-secondary btn-sm quick-nav-btn" data-target="encounter"
+                        style="padding: 2px 8px; font-size: 0.72rem; background: rgba(255,255,255,0.15); border: none; color: white;">🩺
+                        New Encounter</button>
+                    <button class="btn btn-secondary btn-sm quick-nav-btn" data-target="patient-detail"
+                        data-patient="P001"
+                        style="padding: 2px 8px; font-size: 0.72rem; background: rgba(255,255,255,0.15); border: none; color: white;">👤
+                        EHR P001</button>
+                    <button class="btn btn-secondary btn-sm quick-nav-btn" data-target="terminology"
+                        style="padding: 2px 8px; font-size: 0.72rem; background: rgba(255,255,255,0.15); border: none; color: white;">🔎
+                        AYUSH Terms</button>
+                    <button class="btn btn-secondary btn-sm quick-nav-btn" data-target="verification"
+                        style="padding: 2px 8px; font-size: 0.72rem; background: rgba(255,255,255,0.15); border: none; color: white;">✅
+                        Verify Queue</button>
+                    <button class="btn btn-secondary btn-sm quick-nav-btn" data-target="developer"
+                        style="padding: 2px 8px; font-size: 0.72rem; background: rgba(255,255,255,0.15); border: none; color: white;">🔌
+                        API Sandbox</button>
+                </div>
+
+                <!-- Doctor / User Profile -->
+                <div class="user-profile-badge">
+                    <div class="avatar-circle" id="user-avatar">VS</div>
+                    <div>
+                        <div style="font-size: 0.82rem; font-weight: 700; line-height: 1.1;" id="user-name">Dr. Vikram
+                            Sharma</div>
+                        <div style="font-size: 0.7rem; opacity: 0.85;" id="user-title">Senior Specialist (BAMS, MD)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 2. MAIN LAYOUT GRID (Sidebar + Screen Content) -->
+        <div class="layout-body">
+
+            <!-- SIDEBAR NAVIGATION -->
+            <nav class="app-sidebar">
+                <div class="nav-group">
+                    <div class="nav-label">Clinical Core</div>
+                    <a class="nav-item active" data-screen="dashboard">
+                        <i class="fa-solid fa-house-medical"></i>
+                        <span>Doctor Dashboard</span>
+                    </a>
+                    <a class="nav-item" data-screen="patients">
+                        <i class="fa-solid fa-user-injury"></i>
+                        <span>Patients & EHR</span>
+                    </a>
+                    <a class="nav-item" data-screen="encounter">
+                        <i class="fa-solid fa-stethoscope"></i>
+                        <span>New Clinical Encounter</span>
+                    </a>
+                </div>
+
+                <div class="nav-group" style="margin-top: 16px;">
+                    <div class="nav-label">Terminology & Dual Coding</div>
+                    <a class="nav-item" data-screen="terminology">
+                        <i class="fa-solid fa-book-medical"></i>
+                        <span>AYUSH Terminology</span>
+                    </a>
+                    <a class="nav-item" data-screen="mapping-detail">
+                        <i class="fa-solid fa-code-compare"></i>
+                        <span>ICD-11 Mapping Engine</span>
+                    </a>
+                    <a class="nav-item" data-screen="verification">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Verification Queue</span>
+                        <span class="badge-count" id="sidebar-queue-count">7</span>
+                    </a>
+                </div>
+
+                <div class="nav-group" style="margin-top: 16px;">
+                    <div class="nav-label">Analytics & Developer</div>
+                    <a class="nav-item" data-screen="analytics">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Clinical Analytics</span>
+                    </a>
+                    <a class="nav-item" data-screen="developer">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Developer / API Portal</span>
+                    </a>
+                    <a class="nav-item" data-screen="settings">
+                        <i class="fa-solid fa-hospital-user"></i>
+                        <span>Hospital Settings</span>
+                    </a>
+                </div>
+
+                <!-- Footer ABDM Compliance tag -->
+                <div class="sidebar-footer" style="margin-top: auto;">
+                    <div class="abdm-compliant-badge">
+                        <i class="fa-solid fa-shield-halved abdm-icon"></i>
+                        <div>
+                            <div style="font-weight: 700; color: #0284C7;">ABDM Standard M1/M2</div>
+                            <div style="font-size: 0.68rem;">ICD-11 TM-2 Compliant</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- DYNAMIC CONTENT SCREEN CONTAINER -->
+            <main class="app-content" id="main-content">
+                <!-- Screen contents rendered dynamically via app.js -->
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL OVERLAY WRAPPER -->
+    <div id="modal-container" style="display: none;"></div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Load Data and Application Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
